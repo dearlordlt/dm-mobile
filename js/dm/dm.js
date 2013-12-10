@@ -115,6 +115,20 @@ $("#getUserStatsBtn").click(function() {
 });
 
 /**
+ * Facebook stuff
+ */
+function applyFacebookProfile() {
+    $.ajaxSetup({ cache: true });
+    $.getScript('//connect.facebook.net/en_UK/all.js', function(){
+        FB.init({
+            appId: '592501834152367'
+        });
+        $('#loginbutton,#feedbutton').removeAttr('disabled');
+        FB.getLoginStatus(updateStatusCallback);
+    });
+}
+
+/**
  * Meniu stuff
  */
 $("#meniuChat").click(function(){
@@ -131,6 +145,8 @@ $("#meniuProfle").click(function(){
     $('#profile').show(300);
 
     $('#hUser').html(window.logedInUser);
+
+    applyFacebookProfile();
 });
 
 $("#meniuStats").click(function(){

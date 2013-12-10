@@ -16,6 +16,7 @@
     <!-- Custom styles for this template -->
     <link href="dist/css/dm/signin.css" rel="stylesheet">
     <link href="dist/css/dm/starter-template.css" rel="stylesheet">
+    <link href="dist/css/dm/dm.css" rel="stylesheet">
 
     <!-- electroserver init -->
     <script src="es/modernizr.js"></script>
@@ -135,7 +136,28 @@
                     <h3 class="panel-title">Vartotojo <b></b><span id="hUser"></span></b> profilis</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="alert alert-danger">Nepavyko prisijungti prie FACEBOOK profilio</div>
+                    <!-- FACEBOOK -->
+                        <div id="fb-root"></div>
+                        <script src="js/dm/facebook.js"></script>
+                        <h4>Socialine paskyra</h4>
+                        <p><fb:login-button autologoutlink="true" perms="email,user_birthday,status_update,publish_stream"></fb:login-button></p
+                        <p><a href="#" class="btn btn-primary btn-xs" onclick="share(); return false;">Dalintis su draugais</a></p>
+                        <div id="fbAlert" class="alert alert-success"></div>
+                        <div id="login" style ="display:none"></div>
+                        <div id="name"></div>
+                        <hr />
+
+                        <div class="fb-like-box" data-href="http://www.facebook.com/darnusmiestas" data-colorscheme="dark" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false"></div>
+                        <div class="fb-comments" data-href="http://vds000004.hosto.lt/dm-mobile" data-numposts="10" data-colorscheme="dark"></div>
+
+                        <script>(function(d, s, id) {
+                            var js, fjs = d.getElementsByTagName(s)[0];
+                            if (d.getElementById(id)) return;
+                            js = d.createElement(s); js.id = id;
+                            js.src = "//connect.facebook.net/lt_LT/all.js#xfbml=1&appId=592501834152367";
+                            fjs.parentNode.insertBefore(js, fjs);
+                        }(document, 'script', 'facebook-jssdk'));</script>
+                    <!-- END FACEBOOK FOREWAH -->
                 </div>
                 <div class="panel-footer"></div>
             </div>
@@ -149,7 +171,7 @@
                 <textarea id="chatWindow" class="form-control" rows="6"></textarea>
             </div>
             <div class="form-group">
-                <div class="row">s
+                <div class="row">
                     <div id="chatStatus" class="col-md-11">
                         <select id="statusWindow" multiple class="form-control" rows="2"></select>
                     </div>
@@ -180,6 +202,8 @@
 <script src="js/dm/dm.js"></script>
 <!-- Highcharts -->
 <script src="http://code.highcharts.com/highcharts.js"></script>
+<!-- Facebook -->
+<script src="http://connect.facebook.net/en_US/all.js"></script>
 
 </body>
 </html>
