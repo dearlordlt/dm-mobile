@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="docs-assets/ico/favicon.png">
+
+    <title>Darnus Miestas</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="dist/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="dist/css/dm/signin.css" rel="stylesheet">
+    <link href="dist/css/dm/starter-template.css" rel="stylesheet">
+
+    <!-- electroserver init -->
+    <script src="es/modernizr.js"></script>
+    <script src="es/ElectroServer-5-Client-JavaScript.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div id="login" class="signin">
+    <form class="form-signin">
+        <h2 class="form-signin-heading">Prašome prisijungti</h2>
+        <input id="username" type="text" class="form-control" placeholder="Vartotojo vardas" required autofocus>
+        <input id="password" type="password" class="form-control" placeholder="Slaptažodis" required>
+        <button id="btnlogin" class="btn btn-lg btn-warning btn-block" type="button">Prisijungti</button>
+        <button id="loginerror" type="button" class="btn btn-lg btn-danger btn-block">Neteisingi pasijungimo duomenys</button>
+    </form>
+</div>
+
+<div id="content">
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Darnus miestas</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#" id="meniuChat">Pokalbiai</a></li>
+                    <li><a href="#" id="meniuProfle">Profilis</a></li>
+                    <li><a href="#" id="meniuStats">Statistikos</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div id="stats" class="container" style="margin: 20px;">
+            <div class="progress">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                    Vartotojų per dieną <span id="usersPerDay">12</span>
+                    <span class="sr-only">40% Complete (success)</span>
+                </div>
+            </div>
+            <div class="progress">
+                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                    Registracijų per dieną <span id="regsPerDay">12</span>
+                    <span class="sr-only">20% Complete</span>
+                </div>
+            </div>
+            <div class="progress">
+                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                    Serverio apkrova <span id="serverPerDay">12</span>
+                    <span class="sr-only">60% Complete (warning)</span>
+                </div>
+            </div>
+            <div class="progress">
+                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                    Dialogų per dieną <span id="dialogsPerDay">12</span>
+                    <span class="sr-only">80% Complete</span>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <i>Visos statistikos pateikiamos už pastarąsias 10 dienų.</i>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <input type="text" class="form-control" id="userNameStats" placeholder="Įveskite vartotojo vardą">
+                            </div>
+                            <div class="col-xs-2">
+                                <button id="getUserStatsBtn" type="button" class="btn btn-warning">Gauti statistiką</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <div id="chartContainer" style="width:90%; height:400px;"></div>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>ID</th>
+                                    <th>Vartotojo vardas</th>
+                                    <th>Pasijungimo data</th>
+                                    <th>Adresas</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userStats">
+                                <tr><td colspan='5'><div class='alert alert-success'>Pasirinkite vartotoją</div></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="profile" class="container" style="margin: 20px;">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Vartotojo <b></b><span id="hUser"></span></b> profilis</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="alert alert-danger">Nepavyko prisijungti prie FACEBOOK profilio</div>
+                </div>
+                <div class="panel-footer"></div>
+            </div>
+        </div>
+
+        <div id="dm_chat" class="container">
+            <div class="form-group">
+                <h4>Pokalbiai</h4>
+            </div>
+            <div class="form-group">
+                <textarea id="chatWindow" class="form-control" rows="6"></textarea>
+            </div>
+            <div class="form-group">
+                <div class="row">s
+                    <div id="chatStatus" class="col-md-11">
+                        <select id="statusWindow" multiple class="form-control" rows="2"></select>
+                    </div>
+                    <div class="col-md-1">
+                        <button id="toggleStatus" type="button" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input class="form-control" id="focusedInput" type="text" placeholder="Bendrauk ...">
+            </div>
+            <div class="form-group">
+                <button id="chatBtn" type="button" class="btn btn-warning">Bendrauk</button>
+            </div>
+        </div>
+
+    </div>
+
+<!-- Jquery -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!-- bootstrap -->
+<script src="dist/js/bootstrap.min.js"></script>
+<script src="js/dropdown.js"></script>
+<script src="dist/js/bootstrap.js"></script>
+<!-- DM Script -->
+<script src="js/dm/dm.js"></script>
+<!-- Highcharts -->
+<script src="http://code.highcharts.com/highcharts.js"></script>
+
+</body>
+</html>
