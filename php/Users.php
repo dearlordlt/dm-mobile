@@ -55,7 +55,7 @@ function showUserAvatars($username) {
 	$json = array();
 	$userid = 0;
 	$user_rs = mysql_query("SELECT id FROM users WHERE username='".$username."';");
-	while($r = mysql_fetch_assoc($user_rs)) { $userid = $r['id']; array_push($json, array('userid' => $userid)); }
+	while($r = mysql_fetch_assoc($user_rs)) { $userid = $r['id']; }
 	
 	$avatars_rs = mysql_query("SELECT * FROM avatars WHERE user_id = ".$userid.";");
 	while($r = mysql_fetch_assoc($avatars_rs)) { $json[] = $r; }
