@@ -42,8 +42,36 @@ $("#toggleStatus").click(function(){
 /**
 * User stats stuff
 */
-$
-("#progress_stats").click(function(){
+
+function showAvatars() {
+    $("#avatarStatsBody").hide();
+    $.ajax({
+        type: 'GET',
+        url: 'http://vds000004.hosto.lt/dm-mobile/php/Users.php',
+        data: {
+            action: "avatars", username: window.logedInUser
+        },
+        success: function(msg){
+            if(msg == "0") {
+                $("#avatars_panel").html("<div class='alert alert-danger'>Vartotojas neturi avatarų</div>");
+                return;
+            }
+            var stats = $.parseJSON(msg);
+            $("#avatars_panel").html("");
+            for(var i = 0; i < stats.length; i++) {
+                $("#avatars_panel").append(
+                    "<a class='btn btn-primary  btn-xs' onclick='loadAvatarStats("+stats[i].id+");return false;'>@" + stats[i].name + "</a>&nbsp;"
+                );
+            }
+        }
+    });
+}
+
+function loadAvatarStats(aid) {
+    $("#avatarStatsBody").show(300);
+}
+
+$("#progress_stats").click(function(){
     $("#p_stats_body").toggle(300);
 });
 $("#alert_stats").click(function(){
@@ -168,6 +196,8 @@ $("#meniuStats").click(function(){
     $("#dialogsPerDay").html(Math.floor((Math.random()*25)+1) + 80);
 
     $("#chartContainer").css( "height" , "0px");
+
+    showAvatars();
 });
 
 /**
