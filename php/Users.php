@@ -40,6 +40,29 @@ function showUserStatsChart($username) {
 	print json_encode($rows);
 }
 
+function showUserSocCap($username, $avatarid) {
+	$json = array();
+	$userid = 0;
+	$user_rs = mysql_query("SELECT id FROM users WHERE username='".$username."';");
+	while($r = mysql_fetch_assoc($user_rs)) { $userid = $r['id']; array_push($json, array('userid' => $userid)); }
+	
+	//$user_vars = mysql_query("SELECT COUNT(*) FROM avatar_vars where ");
+	
+	print json_encode($json);
+}
+
+function showUserAvatars($username) {
+	$json = array();
+	$userid = 0;
+	$user_rs = mysql_query("SELECT id FROM users WHERE username='".$username."';");
+	while($r = mysql_fetch_assoc($user_rs)) { $userid = $r['id']; array_push($json, array('userid' => $userid)); }
+	
+	$avatars_rs = mysql_query("SELECT * FROM avatars WHERE user_id = ".$userid.";");
+	while($r = mysql_fetch_assoc($avatars_rs)) { $json[] = $r; }
+	
+	print json_encode($json);
+}
+
 if(isset($_REQUEST) && !empty($_REQUEST)) {
 	if($_REQUEST['action'] == "login") {
 		login($_REQUEST['username'], $_REQUEST['password']);
@@ -49,6 +72,12 @@ if(isset($_REQUEST) && !empty($_REQUEST)) {
 	}
 	if($_REQUEST['action'] == "statsChart") {
 		showUserStatsChart($_REQUEST['username']);
+	}
+	if($_REQUEST['action'] == "socCap") {
+		showUserSocCap($_REQUEST['username'], $_REQUEST['avatarid']);
+	}
+	if($_REQUEST['action'] == "avatars") {
+		showUserAvatars($_REQUEST['username']);
 	}
 }
 

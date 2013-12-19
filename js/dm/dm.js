@@ -42,6 +42,13 @@ $("#toggleStatus").click(function(){
 /**
 * User stats stuff
 */
+$
+("#progress_stats").click(function(){
+    $("#p_stats_body").toggle(300);
+});
+$("#alert_stats").click(function(){
+    $("#alert_panel").hide(300);
+});
 $("#getUserStatsBtn").click(function() {
     $("#userStats").html("<tr><td colspan='5'><div class='alert alert-warning'>Duomenys kraunami</div></td></tr>");
     $("#chartContainer").css( "display" , "none");
