@@ -69,6 +69,48 @@ function showAvatars() {
 
 function loadAvatarStats(aid) {
     $("#avatarStatsBody").show(300);
+
+    $.ajax({
+        type: 'GET',
+        url: 'http://vds000004.hosto.lt/dm-mobile/php/Users.php',
+        data: {
+            action: "socCap", username: window.logedInUser, avatarid: aid
+        },
+        success: function(msg){
+            if(msg == "0") {
+                $("#soccap").html("<div class='alert alert-danger'>Avataras neturi duomenų</div>");
+                return;
+            }
+            var stats = $.parseJSON(msg);
+            $("#soccapul").html("");
+            var totalSK = parseInt(stats[0].vars) + parseInt(stats[0].fr) + parseInt(stats[0].items) + parseInt(stats[0].quests) + parseInt(stats[0].stats);
+            $("#soccapul").append(
+                '<li class="list-group-item"><a href="#" class="list-group-item active">Socialinio kapitalo kooficientas: <span class="badge">' +
+                    totalSK +
+                    '</span></a></li>'
+            );
+
+            $("#soccapul").append(
+                '<li class="list-group-item">Veikėjo veiksmai: <span class="badge">' + stats[0].vars + '</span></li>'
+            );
+
+            $("#soccapul").append(
+                '<li class="list-group-item">Veikėjo draugai: <span class="badge">' + stats[0].fr + '</span></li>'
+            );
+
+            $("#soccapul").append(
+                '<li class="list-group-item">Veikėjo turtas: <span class="badge">' + stats[0].items + '</span></li>'
+            );
+
+            $("#soccapul").append(
+                '<li class="list-group-item">Veikėjo interakcijos: <span class="badge">' + stats[0].quests + '</span></li>'
+            );
+
+            $("#soccapul").append(
+                '<li class="list-group-item">Veikėjo aktyvumas: <span class="badge">' + stats[0].stats + '</span></li>'
+            );
+        }
+    });
 }
 
 $("#progress_stats").click(function(){
