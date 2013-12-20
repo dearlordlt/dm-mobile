@@ -41,14 +41,26 @@ function showUserStatsChart($username) {
 }
 
 function showUserSocCap($username, $avatarid) {
-	$json = array();
-	$userid = 0;
+	$userid = 0; $vars = 0; $fr = 0; $items = 0; $q = 0; $stats = 0;
 	$user_rs = mysql_query("SELECT id FROM users WHERE username='".$username."';");
-	while($r = mysql_fetch_assoc($user_rs)) { $userid = $r['id']; array_push($json, array('userid' => $userid)); }
+	while($r = mysql_fetch_assoc($user_rs)) { $userid = $r['id']; }
 	
-	//$user_vars = mysql_query("SELECT COUNT(*) FROM avatar_vars where ");
+	$user_vars = mysql_query("SELECT COUNT(*) as vars FROM avatar_vars where avatar_id= ".$avatarid.";");
+	while($r = mysql_fetch_assoc($user_vars)) { $vars = $r['vars']; }
 	
-	print json_encode($json);
+	$user_fr = mysql_query("SELECT COUNT(*) as fr FROM avatar_friends where avatar_id= ".$avatarid.";");
+	while($r = mysql_fetch_assoc($user_fr)) { $fr = $r['fr']; }
+	
+	$user_items = mysql_query("SELECT COUNT(*) as items FROM items_to_avatars where avatar_id= ".$avatarid.";");
+	while($r = mysql_fetch_assoc($user_items)) { $items = $r['items']; }
+	
+	$user_quests = mysql_query("SELECT COUNT(*) as q FROM quests_to_avatars where avatar_id= ".$avatarid.";");
+	while($r = mysql_fetch_assoc($user_quests)) { $q = $r['q']; }
+	
+	$user_stats = mysql_query("SELECT COUNT(*) as stats FROM users_stats where userid= ".$userid.";");
+	while($r = mysql_fetch_assoc($user_stats)) { $stats = $r['stats']; }
+	
+	print json_encode(array(array('userid' => $userid, 'vars' => $vars, 'fr' => $fr, 'items' => $items, 'quests' => $q, 'stats' => $stats)));
 }
 
 function showUserAvatars($username) {
